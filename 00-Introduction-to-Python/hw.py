@@ -8,7 +8,20 @@
 """
 
 def is_permutation(a: str, b: str) -> bool:
-    # Нужно проверить, являются ли строчки 'a' и 'b' перестановками
+    A = dict()
+    B = dict()
+    for symb in a:
+        if symb in A:
+            A.update({symb: A[symb] + 1})
+        else: A.update({symb: 1})
+
+    for symb in b:
+        if symb in B:
+            B.update({symb: B[symb] + 1})
+        else: B.update({symb: 1})
+
+    return A == B
+
 
 
 assert is_permutation('baba', 'abab')
