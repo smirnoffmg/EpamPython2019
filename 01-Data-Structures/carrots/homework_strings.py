@@ -56,6 +56,7 @@ def translate_from_dna_to_rna(dna):
            rna  = rna + z
     file = open("rna.txt", "w")
     file.write(str(rna))
+    file.close()	
     return rna
 
 
@@ -79,6 +80,7 @@ def count_nucleotides(dna):
     num_of_nucleotides = "A - " + str(A) + " G - "  + str(G) + " T - "  + str(T) + " C - " + str(C)
     file = open("dna.txt", "w")
     file.write(str(num_of_nucleotides))
+    file.close()
     return num_of_nucleotides
 
 
@@ -110,7 +112,10 @@ def translate_rna_to_protein(rna):
     #print(rna)
     file = open("rna_codon.txt", "w")
     file.write(rna)
+    file.close()
     return rna
+
+
 
 translate_rna_to_protein(rna)
 count_nucleotides(dna)
