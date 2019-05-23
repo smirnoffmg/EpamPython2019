@@ -34,25 +34,85 @@ P.S. За незакрытый файловый дескриптор - кара�
 """
 
 # read the file dna.fasta
-dna = None
-
-
+dna = open("dna.fasta.txt", "r")
+rna = open("rna_codon_table.txt", "r")
+dna_read = dna.read()
+#dna_readlines = dna.readlines()
+#print(dna.readlines)
+dna_read_list = dna_read.split("\n")
+#print(dna_read_list)
+        
 def translate_from_dna_to_rna(dna):
-    
-    """your code here"""
-    
+    rna = ""
+    dna_str = ""
+    for l in dna_read_list:
+        if l[0] != ">":
+            dna_str = dna_str + l
+            
+    for l in dna_str:
+       for z in (str(l)):
+           if z == "T":
+               z = "U"
+           rna  = rna + z
+    file = open("rna.txt", "w")
+    file.write(str(rna))
     return rna
 
 
 def count_nucleotides(dna):
     
-    """your code here"""
-    
+    dna_str = ""
+    for l in dna_read_list:
+        if l[0] != ">":
+            dna_str = dna_str + l
+		  
+    A,G,T,C = 0,0,0,0
+    for z in dna_str:
+        if z == "A":
+            A = A + 1
+        elif z == "G":
+            G = G + 1
+        elif z == "T":
+            T = T + 1
+        elif z == "C":
+            C = C + 1
+    num_of_nucleotides = "A - " + str(A) + " G - "  + str(G) + " T - "  + str(T) + " C - " + str(C)
+    file = open("dna.txt", "w")
+    file.write(str(num_of_nucleotides))
     return num_of_nucleotides
 
 
 def translate_rna_to_protein(rna):
+    protein_str = ""
+    protein_list = []
+    for l in rna:
+        a = (str(l)).split("\n")
+        protein_list.append(a)
+    #print(protein_list)
     
-    """your code here"""
+    m = []
+    for z in protein_list:
+        for n in z:
+            m.append(z[0])
+    #print(m)
+
+    x = []
+    for t in m:
+        x.append(str(t).split(" "))
+    #print(x)
     
-    return protein
+    rna = ""
+    for i in x:
+        for z in i:
+            if len(z) == 1 or len(z) == 4:
+                rna = rna + z + " "            
+        
+    #print(rna)
+    file = open("rna_codon.txt", "w")
+    file.write(rna)
+    return rna
+
+translate_rna_to_protein(rna)
+count_nucleotides(dna)
+translate_from_dna_to_rna(dna)
+
