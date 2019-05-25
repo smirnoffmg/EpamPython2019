@@ -41,7 +41,9 @@ dna_read = dna.read()
 #print(dna.readlines)
 dna_read_list = dna_read.split("\n")
 #print(dna_read_list)
-        
+rna.close()
+dna.close()
+
 def translate_from_dna_to_rna(dna):
     rna = ""
     dna_str = ""
@@ -118,5 +120,4 @@ def translate_rna_to_protein(rna):
 translate_rna_to_protein(rna)
 count_nucleotides(dna)
 translate_from_dna_to_rna(dna)
-rna.close()
-dna.close()
+
