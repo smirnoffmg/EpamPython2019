@@ -115,10 +115,8 @@ def translate_rna_to_protein(rna):
     file.close()
     return rna
 
-rna.close()
-dna.close()
-
 translate_rna_to_protein(rna)
 count_nucleotides(dna)
 translate_from_dna_to_rna(dna)
-
+rna.close()
+dna.close()
