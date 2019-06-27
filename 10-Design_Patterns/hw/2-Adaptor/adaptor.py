@@ -48,7 +48,7 @@ class StoreService:
             }
         return {
             'status': 'error',
-            'msg': 'Document with {} ID is not found.',
+            'msg': 'Document with {} ID is not found.'.format(document_id),
         }
 
 
