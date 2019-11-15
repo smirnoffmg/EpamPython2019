@@ -12,7 +12,7 @@
    * `max_price`
    * `most_common_region` где больше всего вин этого сорта производят ?
    * `most_common_country`
-   * `avarage_score`
+   * `average_score`
     
    Найти:
    * `most_expensive_wine` в случае коллизий тут и далее делаем список.
