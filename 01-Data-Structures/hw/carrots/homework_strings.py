@@ -33,10 +33,13 @@ P.S. За незакрытый файловый дескриптор - кара�
 
 """
 
-dna = None
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 def separate_gen(gene_file: str, my_dna_dict = None) -> dict:
-    """
+    """Separate each gene
+
      The function separates each gene and converts the into a view
      dictionary and return dict - {gene name : Gene value}
     """
@@ -53,7 +56,8 @@ def separate_gen(gene_file: str, my_dna_dict = None) -> dict:
 
 
 def return_dict_count_elements(file: str, dict_count_elements=None) -> dict:
-    """
+    """ Return count elements of gene
+
     The function modifies a dictionary containing genes to a view
     dict - {gene name : count nucleotides}
     """
@@ -64,7 +68,67 @@ def return_dict_count_elements(file: str, dict_count_elements=None) -> dict:
     return dict_count_elements
 
 
-# print(return_dict_count_elements('files/dna.fasta'))
+print(return_dict_count_elements('files/dna.fasta'))
+
+
+def parser_for_matplotlib(dict) -> list:
+    """ Function returns lists for paint hist using matplotlib
+
+    Function return n nested list in lists
+    """
+    name_genes = list(dict.keys())
+    word_count_dict = dict.values()
+    name_and_dict_of_word_count = list(zip(name_genes, word_count_dict))
+
+    list_of_count = [[] for i in enumerate(name_and_dict_of_word_count)]
+
+    list_of_word = [[] for i in enumerate(name_and_dict_of_word_count)]
+    for i in range(len(name_and_dict_of_word_count)):
+        for word, count in name_and_dict_of_word_count[i][1].items():
+            list_of_count[i].append(count)
+            list_of_word[i].append(word)
+
+    # list_of_names = [[] for i in enumerate(name_and_dict_of_word_count)]
+    # for i, item in enumerate(name_and_dict_of_word_count):
+    #     list_of_names[i].append(item[0])
+
+    return list_of_count, list_of_word, name_genes #list_of_names
+
+
+dict = return_dict_count_elements('files/dna.fasta')
+
+
+def build_hists(*args):
+    """Build hist using result dict_count_elements
+
+    Takes the result of the function parser_for_matplotlib, and build hist
+    """
+    number_of_latters, letters_themselves, name_genes = args
+    n_groups = len(letters_themselves[0])
+
+    # create plot
+    fig, ax = plt.subplots()
+    index = np.arange(n_groups)
+    bar_width = 0.3
+    opacity = 0.8
+
+    for i, name in enumerate(name_genes):
+        if i % 2 == 0:
+            color = "r"
+        else:
+            color = "b"
+        rest = plt.bar(index+i/3, number_of_latters[i], bar_width, alpha=opacity, color=color, label=name_genes[i])
+
+    plt.xlabel('Gen')
+    plt.ylabel('Count')
+    plt.title('Count of gens')
+    plt.xticks(index + bar_width, letters_themselves[0])
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
+build_hists(*parser_for_matplotlib(dict))
 
 
 def translate_from_dna_to_rna(dna):
@@ -77,27 +141,14 @@ def translate_from_dna_to_rna(dna):
 def count_nucleotides(dna):
 
     """your code here"""
-
-    # return num_of_nucleotides
     pass
-
-
-
-# with open ('files/dna.fasta', 'r') as file:
-#     file = file.readlines()
-#     for i, line in enumerate(file):
-#         print(i)
-#         print(line)
-
-        # line = line.lstrip('\n')
-        # line = line.rstrip('\n')
-    # file = file.split('>', maxsplit=1)
-# print(file)
 
 
 def translate_rna_to_protein(rna):
-    
+
     """your code here"""
-    
+
     # return protein
     pass
+
+
