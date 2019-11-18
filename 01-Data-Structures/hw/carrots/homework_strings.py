@@ -45,8 +45,8 @@ def separate_gen(gene_file: str, my_dna_dict = None) -> dict:
     """
     if my_dna_dict is None:
         my_dna_dict = {}
-    with open(gene_file, 'r') as new:
-        for line in new:
+    with open(gene_file, 'r') as read_gene_file:
+        for line in read_gene_file:
             if line.startswith('>'):
                 key_dict = line.strip('>\n')
                 my_dna_dict[key_dict] = ""
@@ -68,7 +68,7 @@ def return_dict_count_elements(file: str, dict_count_elements=None) -> dict:
     return dict_count_elements
 
 
-print(return_dict_count_elements('files/dna.fasta'))
+# print(return_dict_count_elements('files/dna.fasta'))
 
 
 def parser_for_matplotlib(dict) -> list:
@@ -95,8 +95,6 @@ def parser_for_matplotlib(dict) -> list:
     return list_of_count, list_of_word, name_genes #list_of_names
 
 
-dict = return_dict_count_elements('files/dna.fasta')
-
 
 def build_hists(*args):
     """Build hist using result dict_count_elements
@@ -117,32 +115,47 @@ def build_hists(*args):
             color = "r"
         else:
             color = "b"
-        rest = plt.bar(index+i/3, number_of_latters[i], bar_width, alpha=opacity, color=color, label=name_genes[i])
+        plt.bar(index+i/3, number_of_latters[i], bar_width, alpha=opacity, color=color, label=name_genes[i])
 
-    plt.xlabel('Gen')
+    plt.xlabel('Nucleotides')
     plt.ylabel('Count')
-    plt.title('Count of gens')
+    plt.title('Count of nucleotides')
     plt.xticks(index + bar_width, letters_themselves[0])
     plt.legend()
 
     plt.tight_layout()
     plt.show()
+    fig.savefig('hist.jpg')
 
-build_hists(*parser_for_matplotlib(dict))
 
 
 def translate_from_dna_to_rna(dna):
 
     """your code here"""
 
-    # return rna
-    pass
+    with open(dna, 'r') as file, open("files/replace.fasta", "w") as new_file:
+        for line in file:
+            if line.startswith(">"):
+                continue
+            else:
+                line = line.replace("T", "U")
+            new_file.write(line)
 
-def count_nucleotides(dna):
+
+def count_nucleotides(*dna):
 
     """your code here"""
-    pass
+    list_of_count, list_of_word, name_genes = dna
+    for i, value in enumerate(name_genes):
+        a = value
+        b = "{A} = {B}".format(A=[w for w in enumerate(list_of_word[i])],
+                               B=[k for k in enumerate(list_of_count[i])])
+        print(b)
 
+
+# dict = return_dict_count_elements('files/dna.fasta')
+# list = parser_for_matplotlib(dict)
+# count_nucleotides(*list)
 
 def translate_rna_to_protein(rna):
 
