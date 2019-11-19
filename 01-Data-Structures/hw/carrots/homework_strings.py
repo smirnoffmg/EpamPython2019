@@ -32,6 +32,8 @@
 P.S. За незакрытый файловый дескриптор - караем штрафным дезе.
 
 """
+import matplotlib.pyplot as plt
+
 
 # read the file dna.fasta
 dna_temp = open("./files/dna.fasta", "r")
@@ -51,6 +53,19 @@ def translate_from_dna_to_rna(dna):
     return rna
 
 
+def histogram(data, name):
+    xdata, ydata = [], []
+    for key, value in data.items():
+        xdata.append(key)
+        ydata.append(value)
+    fig = plt.figure()
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.bar(xdata, ydata)
+    ax.set_xlabel('Nucleotids')
+    ax.set_ylabel('Count of nucleotids')
+    ax.set_title(f'Gene name: {name}')
+    plt.savefig(f'./hists/{name}.png', bbox_inches='tight')
+
 def count_nucleotides(dna):
     genes = dna.split('>')
     num_of_nucleotides = open("./files/num_of_nucleotides", "w")
@@ -63,6 +78,7 @@ def count_nucleotides(dna):
         count_g = gene[1].count('G')
         count_t = gene[1].count('T')
         gene_num = {'A': count_a, 'C': count_c, 'G': count_g, 'T': count_t}
+        histogram(gene_num, gene_name)
         num_of_nucleotides.write(f"{gene_name}: ")
         for key, value in gene_num.items():
             num_of_nucleotides.write(f"{key} - {value}, ")
