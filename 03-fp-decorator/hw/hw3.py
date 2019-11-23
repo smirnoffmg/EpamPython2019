@@ -25,3 +25,11 @@ def return_armstrong_true_or_not(number: int) -> bool:
         return "{} is'nt Armstrong number".format(number)
 
 # print(return_armstrong_true_or_not(153))
+
+def collatz_steps(number: int) -> int:
+    while number > 1:
+        count_steps = (number // 2) if number % 2 == 0 \
+            else (number * 3 + 1)
+        return count_steps
+
+# print(collatz_steps(11))
