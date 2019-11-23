@@ -20,7 +20,6 @@ def letters_range(stop, start=1, step=2):
 import string
 
 
-
 def letters_range(arg, *args, **kw):
     """
 
@@ -50,7 +49,6 @@ def letters_range(arg, *args, **kw):
 # print([i for i in letters_range('g', 'p', **{'l': 7, 'o': 0})])
 # print([i for i in letters_range('p', 'g', -2)])
 # print([i for i in letters_range('a')])
-
 
 
 def atom(arg=None):
@@ -84,6 +82,7 @@ def atom(arg=None):
 
     return get_value, set_value, process_value, delete_value
 
+
 # get_value, set_value, process_value, delete_value = atom(1)
 # print(get_value())
 # print(set_value(2))
@@ -96,3 +95,25 @@ def atom(arg=None):
 # print(get_value())
 
 
+def make_it_count(func, name_global_var, global_dict={}):
+    def inner():
+        if name_global_var not in global_dict:
+            global_dict[name_global_var] = 0
+        res = func
+        global_dict[name_global_var] += 1
+        globals().update(global_dict)
+        print(global_dict)
+        return res
+    return inner
+
+def f():
+    return "{}".format(f.__name__)
+
+# f = f
+# print(make_it_count(f, "hw1")()())
+# print(make_it_count(f, "hw1")())
+# print(make_it_count(f, "hw1")())
+# print(make_it_count(f, "hw2")())
+# print(make_it_count(f, "hw2")())
+# print(make_it_count(f, "hw3")())
+# print(globals()['hw2'])

@@ -43,7 +43,6 @@ protein_table = "files/rna_codon_table.txt"
 rna_transform_file = "files/rna_to_prot.txt"
 
 
-
 def separate_gene(dna_file: str, my_dna_dict=None) -> dict:
     """Separate each gene
 
@@ -195,7 +194,6 @@ def translate_from_dna_to_rna(dna_file: str, rna_file: str) -> str:
     return rna
 
 
-
 # print(translate_from_dna_to_rna(dna_file, rna_file))  # uncomment here to get the result
 
 # dict = return_dict_count_nucleotid('file')
@@ -226,8 +224,6 @@ def create_dict_nucleotid_sequence_and_codons(protein_table: str) -> dict:
 
 # create_dict_nucleotid_sequence_and_codons(protein_table)  # uncomment here to get the result
 # print(create_dict_nucleotid_sequence_and_codons(protein_table))  # uncomment here to get the result
-
-
 
 
 def transalte_rna_to_prot(rna: str, nucleotid_codons: dict) -> str:
@@ -267,7 +263,6 @@ def transalte_rna_to_prot(rna: str, nucleotid_codons: dict) -> str:
 
 
 if __name__ == "__main__":
-    
     dicts_count_nucleotid = return_dict_count_nucleotid(dna_file)
     write_dna_statistic(count_nucleotid_file, dicts_count_nucleotid)
 
@@ -282,4 +277,4 @@ if __name__ == "__main__":
     string_transformation = transalte_rna_to_prot(rna, dict_nucleotid_sequence_and_codons)
 
     with open(rna_transform_file, "w") as rna_transformation:
-                    rna_transformation.write(string_transformation)
+        rna_transformation.write(string_transformation)
