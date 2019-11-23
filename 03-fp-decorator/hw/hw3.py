@@ -26,10 +26,25 @@ def return_armstrong_true_or_not(number: int) -> bool:
 
 # print(return_armstrong_true_or_not(153))
 
-def collatz_steps(number: int) -> int:
-    while number > 1:
-        count_steps = (number // 2) if number % 2 == 0 \
-            else (number * 3 + 1)
-        return count_steps
+def collatz_steps(number: int, lst = []) -> int:
+    # if len(lst) == 0:
+    #     return []
+    if number == 1:
+        return number
+    if number % 2 == 0:
+        return collatz_steps(number // 2), number
+    return collatz_steps(3 * number + 1), number
 
-# print(collatz_steps(11))
+# list = []
+# list.append(collatz_steps(6))
+# print(list)
+# args = collatz_steps()
+# print(*args)
+
+def collaz_numb(num):
+    while num > 1:
+        num = (num // 2) if num % 2 == 0 else (3 * num + 1)
+        # print(num)
+    return num
+
+print(collaz_numb(5))
