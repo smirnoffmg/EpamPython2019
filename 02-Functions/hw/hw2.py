@@ -117,3 +117,46 @@ def f():
 # print(make_it_count(f, "hw2")())
 # print(make_it_count(f, "hw3")())
 # print(globals()['hw2'])
+
+
+def modified_func(func, *args, **kw):
+    """
+
+    :param func:
+    :param fixed_args:
+    :param fixed_kw:
+    :return:
+    """
+    def inner():
+        print("args", args)
+        print("kw", kw)
+
+        if args and kw:
+            print("Yes")
+            fix_arg = args
+            fix_kw = kw
+            return f(*(args+fix_arg), **(kw.update(kw)))
+        else:
+            print("No")
+            return f
+
+    inner.__doc__ = """
+                    A func implementation of {0}
+                    with pre-applied arguments being:
+                    <перечисление имен и значений fixated_args и fixated_kwargs>
+                    source_code:
+                    """.format(func.__name__)
+    return inner
+
+def f(*args, **kw):
+    return args, kw
+
+print(modified_func(f, *(1,2), **{"a":1, "b":2}))
+print(modified_func(f))
+
+new_f1 = modified_func(f, *(1, 2), **{"a": 1, "b": 2})
+new_f2 = modified_func(f)
+
+# print("f1", new_f1(*(3,), **{"c":3}))
+print("f1", new_f1())
+print("f2", new_f2())
