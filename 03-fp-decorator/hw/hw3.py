@@ -136,13 +136,13 @@ def slow_func(*args):
     for value in args:
         yield value.upper()
 
-# print("make_cache_with_arg_version1")
-# print(slow_func("one"))
-# time.sleep(1)
-# print(slow_func("three"))
-# print(slow_func("one"))
-# time.sleep(4)
-# print(slow_func())
+print("make_cache_with_arg_version1")
+print(slow_func("one"))
+time.sleep(1)
+print(slow_func("three"))
+print(slow_func("one"))
+time.sleep(4)
+print(slow_func("three"))
 
 
 def make_cache_with_arg_version2(decorator_time=3):
@@ -152,10 +152,10 @@ def make_cache_with_arg_version2(decorator_time=3):
     storage for a certain time, which is passed as an
     argument to the decorator"""
 
-    #  I am a cache and I will be called only once when you ask me to create a decorator for you.
-    storage_function_value = {}  # {args: [result, time]}
 
     def decorator(func):
+        #  I am a cache and I will be called only once when you ask me to create a decorator for you.
+        storage_function_value = {}  # {args: [result, time]}
         @wraps(func)
         def inner(*args, **kwargs):
             if args in storage_function_value:
@@ -181,10 +181,10 @@ def slow_func(*args):
     for value in args:
         yield value.upper()
 
-# print("make_cache_with_arg_version2")
-# print(slow_func("one"))
-# time.sleep(1)
-# print(slow_func("three"))
-# print(slow_func("one"))
-# time.sleep(4)
-# print(slow_func("three"))
+print("make_cache_with_arg_version2")
+print(slow_func("one"))
+time.sleep(1)
+print(slow_func("three"))
+print(slow_func("one"))
+time.sleep(4)
+print(slow_func("three"))
