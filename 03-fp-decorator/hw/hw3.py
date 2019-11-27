@@ -158,19 +158,13 @@ def make_cache_with_arg_version2(decorator_time=3):
         storage_function_value = {}  # {args: [result, time]}
         @wraps(func)
         def inner(*args, **kwargs):
-            if args in storage_function_value:
-                if time.monotonic() - storage_function_value[args][-1] < decorator_time:
-                    return storage_function_value[args], "From cache"
-                else:
-                    new_cache_value = list(func(*args, **kwargs))
-                    new_cache_value.append(time.monotonic())
-                    storage_function_value[args] = new_cache_value
-                    return new_cache_value, "New, with cache replacement"
-            else:
-                create_cache = list(func(*args, **kwargs))
-                create_cache.append(time.monotonic())
-                storage_function_value[args] = create_cache
-                return create_cache, "New, just created cache"
+            if args in storage_function_value and \
+                    time.monotonic() - storage_function_value[args][-1] < decorator_time:
+                return storage_function_value[args], "From cache"
+            create_cache = list(func(*args, **kwargs))
+            create_cache.append(time.monotonic())
+            storage_function_value[args] = create_cache
+            return create_cache, "New created cache"
 
         return inner
     return decorator
