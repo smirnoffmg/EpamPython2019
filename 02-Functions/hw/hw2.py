@@ -42,6 +42,7 @@ def letters_range(first_arg: str, *args, **kw) -> list:
 # print([i for i in letters_range('p', 'g', -2)])
 # print([i for i in letters_range('a')])
 
+
 """
 hw2
 """
@@ -70,7 +71,8 @@ def atom(arg=None):
     massage = """
     Variable 'val' has been deleted already.
     Assign a new value to the set_value
-    method before attempting to delete"""
+    method before attempting to delete
+    """
 
     def get_value():
         nonlocal val
@@ -102,11 +104,12 @@ def atom(arg=None):
 # print("set is run", set_value(2))
 # print("get is run", get_value())
 # print("delet is run", delete_value())
-# # print("set is run", set_value(3))
+# print("set is run", set_value(3))
 # print("get is run", get_value())
 # func = [lambda x: x, lambda x: x+1, lambda x: x*x]
 # print("process is run", process_value(*func))
 # print("get is run", get_value())
+
 
 """
 hw3
@@ -121,10 +124,8 @@ def make_it_count(function, name_global_var):
     counter_name every function call.
     """
     def inner():
-        if name_global_var not in globals():
-            globals()[name_global_var] = 0
         res = function
-        globals()[name_global_var] += 1
+        globals()[name_global_var] = globals().get(name_global_var, 0) + 1
         return res, "Increment of {}".format(name_global_var), globals()[name_global_var]
 
     return inner()
@@ -134,17 +135,19 @@ def f():
     return "{}".format(f.__name__)
 
 
-# print(make_it_count(f, "hw1"))
-# print(make_it_count(f, "hw1"))
-# print(make_it_count(f, "hw2"))
-# print(make_it_count(f, "hw2"))
-# print(make_it_count(f, "hw3"))
+print(make_it_count(f, "hw1"))
+print(make_it_count(f, "hw1"))
+print(make_it_count(f, "hw2"))
+print(make_it_count(f, "hw2"))
+print(make_it_count(f, "hw3"))
+
 
 """
 hw4
 """
 
 
+# partial
 def modified_func(my_func, *fixated_args, **fixated_kw):
     """Returns a function with the same behavior as a function
     my_func that is called using fixated_args and fixated_kwargs
@@ -179,10 +182,11 @@ def test(*args, **kw):
     return "Я функция {name}, которая приняла\nпозиционные аргументы: {0} и" \
            "\nименованные аргументы: {1}!".format(args, kw, name=test.__name__)
 
-# fix_args = (4,5)
-# fix_kw = {"a": 3, "d": 4}
-# args = (1, 2, 3)
-# kw = {"a": 1, "b": 2}
-# print(modified_func(test, *fix_args, **fix_kw)(*args, **kw))
-# print(modified_func(test, *fix_args, **fix_kw).__doc__)
-# print(modified_func(test, *fix_args, **fix_kw).__name__)
+
+fix_args = (4,5)
+fix_kw = {"a": 3, "d": 4}
+args = (1, 2, 3)
+kw = {"a": 1, "b": 2}
+print(modified_func(test, *fix_args, **fix_kw)(*args, **kw))
+print(modified_func(test, *fix_args, **fix_kw).__doc__)
+print(modified_func(test, *fix_args, **fix_kw).__name__)
