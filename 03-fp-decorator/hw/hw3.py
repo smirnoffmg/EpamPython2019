@@ -136,13 +136,13 @@ def slow_func(*args):
     for value in args:
         yield value.upper()
 
-print("make_cache_with_arg_version1")
-print(slow_func("one"))
-time.sleep(1)
-print(slow_func("three"))
-print(slow_func("one"))
-time.sleep(4)
-print(slow_func("three"))
+# print("make_cache_with_arg_version1")
+# print(slow_func("one"))
+# time.sleep(1)
+# print(slow_func("three"))
+# print(slow_func("one"))
+# time.sleep(4)
+# print(slow_func("three"))
 
 
 def make_cache_with_arg_version2(decorator_time=3):
@@ -181,10 +181,10 @@ def slow_func(*args):
     for value in args:
         yield value.upper()
 
-print("make_cache_with_arg_version2")
-print(slow_func("one"))
-time.sleep(1)
-print(slow_func("three"))
-print(slow_func("one"))
-time.sleep(4)
-print(slow_func("three"))
+# print("make_cache_with_arg_version2")
+# print(slow_func("one"))
+# time.sleep(1)
+# print(slow_func("three"))
+# print(slow_func("one"))
+# time.sleep(4)
+# print(slow_func("three"))
