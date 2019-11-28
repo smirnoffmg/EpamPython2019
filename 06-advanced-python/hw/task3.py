@@ -1,27 +1,20 @@
 """
-Реализовать дескриптор, кодирующий слова с помощью шифра Цезаря
+E - dict(<V> : [<V>, <V>, ...])
+Ключ - строка, идентифицирующая вершину графа
+значение - список вершин, достижимых из данной
+
+Сделать так, чтобы по графу можно было итерироваться(обходом в ширину)
 
 """
 
 
-class ShiftDescriptor:
-
-    def __get__(self, instance, owner):
-        pass
-
-    def __set__(self, instance, value):
-        pass
+class Graph:
+    def __init__(self, E):
+        self.E = E
 
 
-class CeasarSipher:
+E = {'A': ['B', 'C', 'D'], 'B': ['C'], 'C': [], 'D': ['A']}
+graph = Graph(E)
 
-    message = ShiftDescriptor(4)
-    another_message = ShiftDescriptor(7)
-
-
-a = CeasarSipher()
-a.message = 'abc'
-a.another_message = 'hello'
-
-assert a.message == 'efg'
-assert a.another_message == 'olssv'
+for vertex in graph:
+    print(vertex)
