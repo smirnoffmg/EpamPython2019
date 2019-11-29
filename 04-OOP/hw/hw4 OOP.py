@@ -4,7 +4,6 @@ from typing import NamedTuple
 
 
 class Teacher(NamedTuple):
-
     last_name: str
     first_name: str
 
