@@ -14,12 +14,13 @@ def make_cache_with_arg_version1(decorator_time=3):
         storage_function_value = {}
         @wraps(func)
         def inner(*args, **kwargs):
+            key = args + tuple(sorted(kwargs.items()))  # dict is unhashable
             try:
-                time_is_over = time.monotonic() - storage_function_value[args][-1] > decorator_time
+                time_is_over = time.perf_counter() - storage_function_value[args][-1] > decorator_time
             except KeyError:
                 create_cache = list(func(*args, **kwargs))
                 create_cache.append(time.monotonic())
-                storage_function_value[args] = create_cache
+                storage_function_value[key] = create_cache
                 return create_cache, "New, just created cache"
             else:
                 if not time_is_over:
@@ -34,12 +35,19 @@ def make_cache_with_arg_version1(decorator_time=3):
 
 
 @make_cache_with_arg_version1(3)
-def slow_func(*args):
-    for value in args:
-        yield value.upper()
+def slow_func(*args, **kwargs):
+    if kwargs:
+        for value in args:
+            yield value, kwargs
+    else:
+        for value in args:
+            yield value
 
+
+ar = (1,2,3)
+kw = {"1": 1, "0": 0, "5": 5}
 print("make_cache_with_arg_version1")
-print(slow_func("one"))
+print(slow_func(*ar, **kw))
 time.sleep(1)
 print(slow_func("three"))
 print(slow_func("one"))
@@ -60,12 +68,13 @@ def make_cache_with_arg_version2(decorator_time):
         storage_function_value = {}  # {args: [result, time]}
         @wraps(func)
         def inner(*args, **kwargs):
-            if args in storage_function_value and \
-                    time.monotonic() - storage_function_value[args][-1] < decorator_time:
-                return storage_function_value[args], "From cache"
+            key = args + tuple(sorted(kwargs.items()))  # dict is unhashable
+            if key in storage_function_value and \
+                    time.perf_counter() - storage_function_value[args][-1] < decorator_time:
+                return storage_function_value[key], "From cache"
             create_cache = list(func(*args, **kwargs))
-            create_cache.append(time.monotonic())
-            storage_function_value[args] = create_cache
+            create_cache.append(time.perf_counter())
+            storage_function_value[key] = create_cache
             return create_cache, "New created cache"
 
         return inner
@@ -73,14 +82,22 @@ def make_cache_with_arg_version2(decorator_time):
 
 
 @make_cache_with_arg_version2(3)
-def slow_func(*args):
-    for value in args:
-        yield value.upper()
+def slow_func(*args, **kwargs):
+    if kwargs:
+        for value in args:
+            yield value, kwargs
+    else:
+        for value in args:
+            yield value
 
-print("make_cache_with_arg_version2")
-print(slow_func("one"))
-time.sleep(1)
-print(slow_func("three"))
-print(slow_func("one"))
-time.sleep(4)
-print(slow_func("three"))
+
+# ar = (1,2,3)
+# kw = {"1": 1, "0": 0, "5": 5}
+#
+# print("make_cache_with_arg_version2")
+# print(slow_func(*ar, **kw))
+# time.sleep(1)
+# print(slow_func("three"))
+# print(slow_func("one"))
+# time.sleep(4)
+# print(slow_func("three"))
