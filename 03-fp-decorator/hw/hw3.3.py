@@ -1,6 +1,6 @@
 def return_collatz_count_steps(pass_number: int, count=0) -> int:
     """Calculate count of number steps to satisfy the condition:
-    number == 1
+    pass_number == 1
 
     collatz() that has one parameter named number.
     If number is even, then collatz() should print
@@ -10,7 +10,7 @@ def return_collatz_count_steps(pass_number: int, count=0) -> int:
     try:
         pass_number = int(pass_number)
     except ValueError:
-        print("Please enter a number correct!")
+        print("Please enter correct number!")
     else:
         if pass_number == 1:
             return count
@@ -22,6 +22,6 @@ def return_collatz_count_steps(pass_number: int, count=0) -> int:
             return return_collatz_count_steps(3 * pass_number + 1, count=count)
 
 
-assert int(return_collatz_count_steps(2)) == 1
+assert return_collatz_count_steps(2) == 1
 assert return_collatz_count_steps(12) == 9
 assert return_collatz_count_steps(1000000) == 152

@@ -1,58 +1,42 @@
 # Написать applydecorator который работает так:
 
+def applydecorator(name):
 
-def applydecorator(func):
-
-    def decorator(wraps):
-        wraps.__name__ = func.__name__
-        return wraps
-    return decorator
+    def wrapper(*args):
+        func(args)
+    return wrapper
 
 @applydecorator
 def saymyname(f, *args, **kwargs):
-  print('Name is', f.__name__)
-  return f(*args, **kwargs)\
+    print('Name is', f.__name__)
+    return f(*args, **kwargs)
 
-@applydecorator
-def andrey(f, *args, **kwargs):
-  print('Name is', f.__name__)
-  return f(*args, **kwargs)
+# @saymyname
 
-
-@saymyname
 def foo(*whatever):
     return whatever
 
-print(*foo(40, 2), foo.__name__)
+print(*foo(1,2,3))
 
+# saymyname(*foo(1,2,3))
+#
+#
+# def decorator_function(func):
+#     def wrapper():
+#         print('Функция-обёртка!')
+#         print('Оборачиваемая функция: {}'.format(func))
+#         print('Выполняем обёрнутую функцию...')
+#         wrapper
+#         print('Выходим из обёртки')
+#     return func
+#
+# @decorator_function
+# def hello_world():
+#     return "Hello world"
+#
+# print(hello_world())
+#
+# @hello_world
+# def goodby_world():
+#     print("goodby_world")
 
-def decorator_maker():
-    print("Я создаю декораторы! Я буду вызван только раз: "
-          "когда ты попросишь меня создать тебе декоратор.")
-
-    def my_decorator(func):
-        print("Я - декоратор! Я буду вызван только раз: в момент декорирования функции.")
-
-        def wrapped():
-            print("Я - обёртка вокруг декорируемой функции. "
-                  "Я буду вызвана каждый раз когда ты вызываешь декорируемую функцию. "
-                  "Я возвращаю результат работы декорируемой функции.")
-            return func()
-
-        print("Я возвращаю обёрнутую функцию.")
-
-        return wrapped
-
-    print("Я возвращаю декоратор.")
-    return my_decorator
-
-
-
-
-
-
-
-
-# >>>foo
-# >>>40 2
-# То есть избавляет нас от необходимости писать wrapper самим каждый раз.

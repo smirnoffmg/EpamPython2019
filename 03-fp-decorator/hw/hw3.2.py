@@ -12,9 +12,8 @@ def return_armstrong_true_or_not(pass_number: int) -> bool:
 
     result = reduce(lambda x, y: x + pow(int(y), len(str(pass_number))),
                     str(pass_number), 0)
-    if pass_number == result:
-        return pass_number
+    return result
 
 
 number = 153
-assert return_armstrong_true_or_not(number) == number, "The number {} is not an Armstrong number".format(number)
+assert return_armstrong_true_or_not(number) == number, f"The number {number} is not an Armstrong number"
