@@ -1,31 +1,22 @@
-from threading import Timer
-
-
-def make_cache(maxtime):
-    cache = []
-
-    def remove():
-        print(cache)
-        del cache[:]
-        print(cache)
-
+def applydecorator(prev_dec):
     def wrapper(func):
-        def inner(*args, **kwargs):
-            result = func(*args, **kwargs)
-            cache.append({args: result})
-            return result
-        t = Timer(maxtime, remove)
-        t.start()
-        return inner
+        def func_caller(*args, **kwargs):
+            return func(*args, **kwargs)
+        return func_caller
     return wrapper
 
 
-@make_cache(30)
-def slow_function(n):
-    if n < 2:
-        return n
+@applydecorator
+def saymyname(f, *args, **kwargs):
+    print('Name is', f.__name__)
+    print(f(*args, **kwargs))
+    return f(*args, **kwargs)
 
-    return slow_function(n - 1) + slow_function(n - 2)
+
+# saymyname is now a decorator
+@saymyname
+def foo(*whatever):
+    return whatever
 
 
-slow_function(1234)
+print(*(foo(40, 2)))
