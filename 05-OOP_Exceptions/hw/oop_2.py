@@ -49,8 +49,70 @@ PEP8 соблюдать строго, проверку делаю автотес
 К названием остальных переменных, классов и тд. подходить ответственно -
 давать логичные подходящие имена.
 """
+from __future__ import annotations
 import datetime
 from collections import defaultdict
+
+
+class HomeworkResult:
+    __slots__ = ['homework', 'solution', 'author', 'created']
+
+    def __init__(self, student: Student, homework: Homework, solution: str):
+        if not isinstance(homework, Homework):
+            raise TypeError('You gave a not Homework object')
+        self.homework = homework
+        self.author = student
+        self.solution = solution
+        self.created = datetime.datetime.now()
+
+
+class Homework:
+    __slots__ = ['text', 'deadline', 'created']
+
+    def __init__(self, text: str, days: int):
+        self.text = text
+        self.deadline = datetime.timedelta(days)
+        self.created = datetime.datetime.now()
+
+    def is_active(self):
+        return datetime.datetime.now() - self.created < self.deadline
+
+
+class Person:
+    __slots__ = ['last_name', 'first_name']
+
+    def __init__(self, last_name: str, first_name: str):
+        self.first_name = first_name
+        self.last_name = last_name
+
+
+class Student(Person):
+    def do_homework(self, homework: Homework, solution: str):
+        if homework.is_active():
+            return HomeworkResult(self, homework, solution)
+        raise DeadlineError('You are late')
+
+
+class Teacher(Person):
+    homework_done = defaultdict(list)
+
+    @staticmethod
+    def create_homework(text: str, days: int):
+        return Homework(text, days)
+
+    def check_homework(self, hw_res: HomeworkResult):
+        if len(hw_res.solution) > 5:
+            if hw_res.homework not in self.homework_done:
+                self.homework_done[hw_res.homework] = hw_res
+            return True
+        return False
+
+    @classmethod
+    def reset_results(cls, hw: Homework = None):
+        if hw is None:
+            cls.homework_done.clear()
+            return
+        del cls.homework_done[hw]
 
 
 if __name__ == '__main__':
