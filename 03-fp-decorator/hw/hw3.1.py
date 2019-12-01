@@ -40,8 +40,7 @@ find the value of the following expression.
 
 
 """Problem 48. Find the last ten digits of the series"""
-
-p48 = [i ** i for i in range(1, 1001)][-1:-11:-1]
-
-for i, v in enumerate(p48[::-1]):
-    print(f"Last {i + 1} elements is {v:d}")
+stop = 1000
+start = stop - 9
+p48 = sum([i ** i for i in range(start, stop + 1)])
+print(p48)
