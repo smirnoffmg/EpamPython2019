@@ -38,6 +38,50 @@ PEP8 соблюдать строго, проверку делаю автотес
 давать логичные подходящие имена.
 """
 import datetime
+from dataclasses import dataclass
+from typing import NamedTuple
+
+
+class Teacher(NamedTuple):
+    last_name: str
+    first_name: str
+
+    @staticmethod
+    def create_homework(text, days) -> object:
+        return HomeWork(text, days)
+
+
+class HomeWork:
+
+    def __init__(self, text_task: str, count_days: int):
+        self.text = text_task
+        self.deadline = datetime.timedelta(count_days)
+        self.created = datetime.datetime.now()
+
+    def is_active(self) -> bool:
+        time_is_over = datetime.datetime.now() - self.created \
+                       > self.deadline
+        return time_is_over
+
+
+@dataclass(frozen=True)
+class Student:
+    """
+    has two fields: first and last name
+    has method do_homework: it takes a Homework object and returns it,
+    if the task has already expired, it prints 'You are late'
+    and returns None
+    """
+
+    __slots__ = ["last_name", "first_name"]
+
+    last_name: str
+    first_name: str
+
+    @staticmethod
+    def do_homework(hw: object):
+        if not hw.is_active():
+            return hw
 
 
 if __name__ == '__main__':

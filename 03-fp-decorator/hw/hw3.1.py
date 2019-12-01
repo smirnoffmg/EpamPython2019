@@ -31,12 +31,12 @@ find the value of the following expression.
 
                 d1 × d10 × d100 × d1000 × d10000 × d100000 × d1000000"""
 
-# N = 10**6
-#
-# p40 = reduce(lambda x, y: x*y, [int(list("".join(str(i) for i in range(1, N + 1)))[x-1])
-#                                 for x in [10**i for i in range(7)]])
-#
-# print("The value of the following expression is {}".format(p40))
+N = 10**6
+
+p40 = reduce(lambda x, y: x*y, [int(list("".join(str(i) for i in range(1, N + 1)))[x-1])
+                                for x in [10**i for i in range(7)]])
+
+print("The value of the following expression is {}".format(p40))
 
 
 """Problem 48. Find the last ten digits of the series"""
