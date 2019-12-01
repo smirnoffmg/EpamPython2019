@@ -37,6 +37,7 @@ PEP8 соблюдать строго, проверку делаю автотес
 К названием остальных переменных, классов и тд. подходить ответственно -
 давать логичные подходящие имена.
 """
+import typing
 import datetime
 
 
@@ -60,12 +61,11 @@ class Student:
         self.last_name = last_name
 
     @staticmethod
-    def do_homework(homework: object):
+    def do_homework(homework: 'Homework'):
         if homework.is_active():
             return homework
-        else:
-            print('You are late')
-            return None
+        print('You are late')
+        return
 
 
 class Teacher:
