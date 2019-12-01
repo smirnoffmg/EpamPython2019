@@ -54,6 +54,10 @@ import datetime
 from collections import defaultdict
 
 
+class DeadlineError(Exception):
+    pass
+
+
 class HomeworkResult:
     __slots__ = ['homework', 'solution', 'author', 'created']
 
@@ -90,7 +94,8 @@ class Student(Person):
     def do_homework(self, homework: Homework, solution: str):
         if homework.is_active():
             return HomeworkResult(self, homework, solution)
-        raise DeadlineError('You are late')
+        else:
+            raise DeadlineError("You are late")
 
 
 class Teacher(Person):
@@ -100,19 +105,23 @@ class Teacher(Person):
     def create_homework(text: str, days: int):
         return Homework(text, days)
 
-    def check_homework(self, hw_res: HomeworkResult):
-        if len(hw_res.solution) > 5:
-            if hw_res.homework not in self.homework_done:
-                self.homework_done[hw_res.homework] = hw_res
+    @classmethod
+    def check_homework(cls, hw_result: HomeworkResult):
+        if len(hw_result.solution) > 5:
+            if hw_result.homework not in cls.homework_done:
+                cls.homework_done[hw_result.homework].append(hw_result)
+            for i in cls.homework_done[hw_result.homework]:
+                if hw_result.solution != i.solution:
+                    cls.homework_done[hw_result.homework].append(hw_result)
             return True
         return False
 
     @classmethod
-    def reset_results(cls, hw: Homework = None):
-        if hw is None:
+    def reset_results(cls, homework: Homework = None):
+        if homework:
+            del cls.homework_done[homework]
+        else:
             cls.homework_done.clear()
-            return
-        del cls.homework_done[hw]
 
 
 if __name__ == '__main__':
