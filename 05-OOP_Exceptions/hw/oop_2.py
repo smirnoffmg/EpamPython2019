@@ -99,7 +99,7 @@ class Student(Person):
 
 
 class Teacher(Person):
-    homework_done = defaultdict(list)
+    homework_done = defaultdict(set)
 
     @staticmethod
     def create_homework(text: str, days: int):
@@ -108,8 +108,7 @@ class Teacher(Person):
     @classmethod
     def check_homework(cls, hw_result: HomeworkResult):
         if len(hw_result.solution) > 5:
-            if hw_result.homework not in cls.homework_done:
-                cls.homework_done[hw_result.homework].append(hw_result)
+            cls.homework_done[hw_result.homework].add(hw_result)
             return True
         return False
 
@@ -148,5 +147,5 @@ if __name__ == '__main__':
     opp_teacher.check_homework(result_2)
     opp_teacher.check_homework(result_3)
 
-    print(Teacher.homework_done[oop_hw])
+    print(Teacher.homework_done[docs_hw])
     Teacher.reset_results()
