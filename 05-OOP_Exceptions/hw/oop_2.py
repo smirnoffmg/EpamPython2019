@@ -49,9 +49,89 @@ PEP8 соблюдать строго, проверку делаю автотес
 К названием остальных переменных, классов и тд. подходить ответственно -
 давать логичные подходящие имена.
 """
+
 import datetime
 from collections import defaultdict
+from dataclasses import dataclass
 
+# g = defaultdict(set, **{"a":{"b"}, "c":{"d"}})
+# g["e"].add("f")
+# print(g)
+
+
+class Teacher:
+    def __init__(self, last_name, first_name):
+        self.last_name = last_name
+        self.first_name = first_name
+        self.homework_done = defaultdict(set)
+
+    @staticmethod
+    def create_homework(text, days) -> object:
+        return HomeWork(text, days)
+
+    @classmethod
+    def chek_homework(cls, chek) -> bool:
+        if len(chek.solution) > 5 and chek.home_work not in cls.homework_done:
+            cls.homework_done[chek.home_work].add(chek.home_work)
+            return True
+        return False
+
+    @classmethod
+    def reset_result(cls, home_work):
+        if home_work:
+            cls.home.pop
+        else:
+            cls.homework_done.clear()
+
+
+class Student(Teacher):
+    """
+    has two fields: first and last name
+    has method do_homework: it takes a Homework object and returns it,
+    if the task has already expired, it prints 'You are late'
+    and returns None
+    """
+    def __init__(self, *args, **kwargs):
+        # super(Teacher, self).__init__()
+        super().__init__(args, kwargs)
+
+    def do_homework(self, homework: object, solution: str):
+        if homework.is_active():
+            return HomeworkResult(self, homework, solution)
+        raise DeadlineError
+
+
+class HomeWork:
+    def __init__(self, text_task: str, count_days: int):
+        self.text = text_task
+        self.deadline = datetime.timedelta(count_days)
+        self.created = datetime.datetime.now()
+
+    def is_active(self) -> bool:
+        time_is_over = datetime.datetime.now() - self.created \
+                       > self.deadline
+        return time_is_over
+
+
+class HomeworkResult:
+    def __init__(self, author: Student,
+                 home_work: HomeWork,
+                 solution: str):
+        if not isinstance(home_work, HomeWork):
+            raise MyInstanceError()
+        self.home_work = home_work
+        self.solution = solution
+        self.author = author
+        self.created = datetime.datetime.now()
+
+
+class MyInstanceError(Exception):
+    print("""You gave a not Homework object""")
+
+
+class DeadlineError(Exception):
+    # print("""You are late""")
+    """You are late"""
 
 if __name__ == '__main__':
     opp_teacher = Teacher('Daniil', 'Shadrin')
