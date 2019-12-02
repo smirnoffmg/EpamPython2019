@@ -110,9 +110,6 @@ class Teacher(Person):
         if len(hw_result.solution) > 5:
             if hw_result.homework not in cls.homework_done:
                 cls.homework_done[hw_result.homework].append(hw_result)
-            for i in cls.homework_done[hw_result.homework]:
-                if hw_result.solution != i.solution:
-                    cls.homework_done[hw_result.homework].append(hw_result)
             return True
         return False
 
