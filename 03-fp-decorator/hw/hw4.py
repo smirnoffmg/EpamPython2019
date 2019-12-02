@@ -1,7 +1,7 @@
 def applydecorator(prev_dec):
-    def wrapper(func):
+    def wrapper(main_func):
         def func_caller(*args, **kwargs):
-            return func(*args, **kwargs)
+            return prev_dec(main_func, *args, **kwargs)
         return func_caller
     return wrapper
 
