@@ -52,86 +52,81 @@ PEP8 соблюдать строго, проверку делаю автотес
 
 import datetime
 from collections import defaultdict
-from dataclasses import dataclass
-
-# g = defaultdict(set, **{"a":{"b"}, "c":{"d"}})
-# g["e"].add("f")
-# print(g)
 
 
-class Teacher:
+class Person:
+
     def __init__(self, last_name, first_name):
         self.last_name = last_name
         self.first_name = first_name
-        self.homework_done = defaultdict(set)
+
+
+class Student(Person):
+
+    def do_homework(self, homework: object, solution=None):
+        if homework.is_active():
+            return HomeworkResult(self, homework, solution)
+        raise DeadlineError("You are late")
+
+
+class Teacher(Person):
+    homework_done = defaultdict(set)
 
     @staticmethod
-    def create_homework(text, days) -> object:
-        return HomeWork(text, days)
+    def create_homework(text, days):
+        return Homework(text, days)
 
     @classmethod
-    def chek_homework(cls, chek) -> bool:
-        if len(chek.solution) > 5 and chek.home_work not in cls.homework_done:
-            cls.homework_done[chek.home_work].add(chek.home_work)
+    def check_homework(cls, homework_result):
+        if len(homework_result.solution) > 5:
+            cls.homework_done[homework_result.homework].add(homework_result.homework)
             return True
         return False
 
     @classmethod
-    def reset_result(cls, home_work):
-        if home_work:
-            cls.home.pop
+    def reset_results(cls, homework=None):
+        if homework:
+            if not isinstance(homework, Homework):
+                raise MyHomeworkError(homework.__class__, "You gave a not Homework object")
+            cls.homework_done[homework].pop()
         else:
             cls.homework_done.clear()
 
 
-class Student(Teacher):
-    """
-    has two fields: first and last name
-    has method do_homework: it takes a Homework object and returns it,
-    if the task has already expired, it prints 'You are late'
-    and returns None
-    """
-    def __init__(self, *args, **kwargs):
-        # super(Teacher, self).__init__()
-        super().__init__(args, kwargs)
+class Homework:
 
-    def do_homework(self, homework: object, solution: str):
-        if homework.is_active():
-            return HomeworkResult(self, homework, solution)
-        raise DeadlineError
-
-
-class HomeWork:
-    def __init__(self, text_task: str, count_days: int):
+    def __init__(self, text_task, count_days):
         self.text = text_task
         self.deadline = datetime.timedelta(count_days)
         self.created = datetime.datetime.now()
 
-    def is_active(self) -> bool:
-        time_is_over = datetime.datetime.now() - self.created \
-                       > self.deadline
-        return time_is_over
+    def is_active(self):
+        return datetime.datetime.now() - self.created < self.deadline
 
 
 class HomeworkResult:
-    def __init__(self, author: Student,
-                 home_work: HomeWork,
-                 solution: str):
-        if not isinstance(home_work, HomeWork):
-            raise MyInstanceError()
-        self.home_work = home_work
+
+    def __init__(self, student, homework, solution):
+
+        if not isinstance(homework, Homework):
+            raise MyHomeworkError(homework.__class__, "You gave a not Homework object")
+
+        self.homework = homework
         self.solution = solution
-        self.author = author
-        self.created = datetime.datetime.now()
+        self.author = student
+        self.created = homework.created
 
 
-class MyInstanceError(Exception):
-    print("""You gave a not Homework object""")
+class MyHomeworkError(Exception):
+    def __init__(self, expression, message):
+        self.expression = expression
+        self.message = message
 
 
-class DeadlineError(Exception):
-    # print("""You are late""")
-    """You are late"""
+class DeadlineError(MyHomeworkError):
+    def __init__(self, message):
+        self.message = message
+
 
 if __name__ == '__main__':
     opp_teacher = Teacher('Daniil', 'Shadrin')

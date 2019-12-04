@@ -70,9 +70,11 @@ class Student:
         self.first_name = first_name
 
     @staticmethod
-    def do_homework(homework):
-        if homework.is_active():
-            return homework
+    def do_homework(home_work):
+        if home_work.is_active():
+            return home_work
+        else:
+            print("You are late")
 
 
 if __name__ == '__main__':
