@@ -108,10 +108,15 @@ list_name_for_global_var = [("fib_dinamic_count", "fib_dinamic_time"),
                             ("fib_recursion_count", "fib_recursion_time"),
                             ("fib_no_recursion_count", "fib_no_recursion_time"),
                             ("fib_memoriz_count", "fib_memoiz_time")]
-
+times = []
 for i, func in enumerate(list_functions):
     for j in range(5, 25, 2):
         func(j)
+    times.append(globals()[list_name_for_global_var[i][1]])
     print(func.__name__, f"\ncall of count: {globals()[list_name_for_global_var[i][0]]},"
                          f"\ntime: {globals()[list_name_for_global_var[i][1]]}")
 
+work_algorithms_sorted_by_speed = sorted(list(zip([func.__name__ for func in list_functions], times)),
+                                         key=lambda x: x[1])
+
+print("Самый быстрый алгоритм: ", work_algorithms_sorted_by_speed[0])
