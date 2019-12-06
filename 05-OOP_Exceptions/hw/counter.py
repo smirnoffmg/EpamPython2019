@@ -5,10 +5,8 @@ get_created_instances - возвращает количество созданы
 reset_instances_counter - сбросить счетчик экземпляров,
 возвращает значение до сброса
 Имя декоратора и методов не менять
-
 Ниже пример использования
 """
-
 
 def instances_counter(cls):
     setattr(cls, "counter", 0)

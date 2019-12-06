@@ -3,29 +3,22 @@
 (Student, Teacher, Homework)
 Советую обратить внимание на defaultdict из модуля collection для
 использования как общую переменную
-
-
 1. Как то не правильно, что после do_homework мы возвращаем все тот же
 объект - будем возвращать какой-то результат работы (HomeworkResult)
-
 HomeworkResult принимает объект автора задания, принимает исходное задание
 и его решение в виде строки
 Атрибуты:
     homework - для объекта Homework, если передан не этот класс -  выкинуть
     подходящие по смыслу исключение с сообщением:
     'You gave a not Homework object'
-
     solution - хранит решение ДЗ как строку
     author - хранит объект Student
     created - c точной датой и временем создания
-
 2. Если задание уже просрочено хотелось бы видеть исключение при do_homework,
 а не просто принт 'You are late'.
 Поднимайте исключение DeadlineError с сообщением 'You are late' вместо print.
-
 3. Student и Teacher имеют одинаковые по смыслу атрибуты
 (last_name, first_name) - избавиться от дублирования с помощью наследования
-
 4.
 Teacher
 Атрибут:
@@ -39,11 +32,9 @@ Teacher
     ответ студента больше 5 символов, так же при успешной проверке добавить в
     homework_done.
     Если меньше 5 символов - никуда не добавлять и вернуть False.
-
     reset_results - если передать экземпряр Homework - удаляет только
     результаты этого задания из homework_done, если ничего не передавать,
     то полностью обнулит homework_done.
-
 PEP8 соблюдать строго, проверку делаю автотестами и просмотром кода.
 Всем перечисленным выше атрибутам и методам классов сохранить названия.
 К названием остальных переменных, классов и тд. подходить ответственно -
@@ -66,7 +57,7 @@ class Student(Person):
     def do_homework(self, homework: object, solution=None):
         if homework.is_active():
             return HomeworkResult(self, homework, solution)
-        raise DeadlineError("You are late")
+        raise DeadlineError
 
 
 class Teacher(Person):
@@ -87,7 +78,7 @@ class Teacher(Person):
     def reset_results(cls, homework=None):
         if homework:
             if not isinstance(homework, Homework):
-                raise MyHomeworkError(homework.__class__, "You gave a not Homework object")
+                raise MyHomeworkError(homework.__class__)
             cls.homework_done[homework].pop()
         else:
             cls.homework_done.clear()
@@ -109,7 +100,7 @@ class HomeworkResult:
     def __init__(self, student, homework, solution):
 
         if not isinstance(homework, Homework):
-            raise MyHomeworkError(homework.__class__, "You gave a not Homework object")
+            raise MyHomeworkError(homework.__class__)
 
         self.homework = homework
         self.solution = solution
@@ -117,16 +108,23 @@ class HomeworkResult:
         self.created = homework.created
 
 
-class MyHomeworkError(Exception):
-    def __init__(self, expression, message):
+class MyPersonalBaseExceptions(Exception):
+    pass
+
+
+class MyHomeworkError(MyPersonalBaseExceptions):
+
+    def __init__(self, expression):
         self.expression = expression
-        self.message = message
+
+    def __str__(self):
+        return "You gave a not Homework object"
 
 
-class DeadlineError(MyHomeworkError):
-    def __init__(self, message):
-        self.message = message
+class DeadlineError(MyPersonalBaseExceptions):
 
+    def __str__(self):
+        return "You are late"
 
 if __name__ == '__main__':
     opp_teacher = Teacher('Daniil', 'Shadrin')

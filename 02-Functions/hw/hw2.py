@@ -148,7 +148,7 @@ hw4
 
 
 # partial
-def modified_func(my_func, *fixated_args, **fixated_kw):
+def modified_func(my_func, *fixated_args, a=None, **fixated_kw):
     """Returns a function with the same behavior as a function
     my_func that is called using fixated_args and fixated_kwargs
 
@@ -157,12 +157,13 @@ def modified_func(my_func, *fixated_args, **fixated_kw):
     of named arguments
     """
 
-    def inner(*args, **kw):
-        if args:
+    def inner(*args, a=None, **kw):
+        if args.values():
             f_args = fixated_args + args
         else:
             f_args = fixated_args
-        kw.update(fixated_kw)
+        if kw.values():
+            kw.update(fixated_kw)
 
         return my_func(*f_args, **kw)
 
@@ -181,12 +182,3 @@ def modified_func(my_func, *fixated_args, **fixated_kw):
 def test(*args, **kw):
     return "Я функция {name}, которая приняла\nпозиционные аргументы: {0} и" \
            "\nименованные аргументы: {1}!".format(args, kw, name=test.__name__)
-
-
-fix_args = (4,5)
-fix_kw = {"a": 3, "d": 4}
-args = (1, 2, 3)
-kw = {"a": 1, "b": 2}
-print(modified_func(test, *fix_args, **fix_kw)(*args, **kw))
-print(modified_func(test, *fix_args, **fix_kw).__doc__)
-print(modified_func(test, *fix_args, **fix_kw).__name__)
