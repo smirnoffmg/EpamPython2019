@@ -51,7 +51,7 @@ class Quaternion:
         conj_num = Quaternion(other.a, -other.b, -other.c, -other.d)
         abs_value = abs(conj_num) ** 2
         a, b, c, d = conj_num.a, conj_num.b, conj_num.c, conj_num.d
-        inv_num = Quaternion(a, b, c, d)
+        inv_num = Quaternion(a/abs_value, b/abs_value, c/abs_value, d/abs_value)
         return self*inv_num
 
     def __eq__(self, other):
@@ -67,4 +67,4 @@ test5 = test1 * test2
 test6 = test1 / test2
 test7 = test1
 test8 = abs(test1)
-print(test8)
+print(test6)
