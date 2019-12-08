@@ -1,27 +1,22 @@
+""""
+Реализовать контекстный менеджер, который подавляет переданные исключения
+with Suppressor(ZeroDivisionError):
+    1/0
+print("It's fine")
 """
-Реализовать дескриптор, кодирующий слова с помощью шифра Цезаря
-
-"""
 
 
-class ShiftDescriptor:
+class Suppressor:
+    def __init__(self, *exceptions):
+        self._exceptions = exceptions
 
-    def __get__(self, instance, owner):
+    def __enter__(self):
         pass
 
-    def __set__(self, instance, value):
-        pass
+    def __exit__(self, exception_type, exception_value, traceback):
+        return issubclass(exception_type, self._exceptions)
 
 
-class CeasarSipher:
-
-    message = ShiftDescriptor(4)
-    another_message = ShiftDescriptor(7)
-
-
-a = CeasarSipher()
-a.message = 'abc'
-a.another_message = 'hello'
-
-assert a.message == 'efg'
-assert a.another_message == 'olssv'
+with Suppressor(ZeroDivisionError):
+    1/0
+print("It's fine")
