@@ -13,6 +13,13 @@ E = {'A': ['B', 'C', 'D'], 'B': ['C'], 'C': [], 'D': ['A']}
 
 
 class Graph:
+    """The class encapsulates the bfs method in itself,
+    which performs a breadth-first traversal
+
+    The implementation below uses the deque data-structure
+    to build-up and return a set of vertices that are accessible
+    within the subjects connected component.
+    """
 
     def __init__(self, name, bfs_graph):
         self.storage = deque(name)
