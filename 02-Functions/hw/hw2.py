@@ -135,11 +135,11 @@ def f():
     return "{}".format(f.__name__)
 
 
-print(make_it_count(f, "hw1"))
-print(make_it_count(f, "hw1"))
-print(make_it_count(f, "hw2"))
-print(make_it_count(f, "hw2"))
-print(make_it_count(f, "hw3"))
+# print(make_it_count(f, "hw1"))
+# print(make_it_count(f, "hw1"))
+# print(make_it_count(f, "hw2"))
+# print(make_it_count(f, "hw2"))
+# print(make_it_count(f, "hw3"))
 
 
 """
@@ -157,8 +157,8 @@ def modified_func(my_func, *fixated_args, a=None, **fixated_kw):
     of named arguments
     """
 
-    def inner(*args, a=None, **kw):
-        if args.values():
+    def inner(*args, **kw):
+        if args:
             f_args = fixated_args + args
         else:
             f_args = fixated_args
@@ -182,3 +182,12 @@ def modified_func(my_func, *fixated_args, a=None, **fixated_kw):
 def test(*args, **kw):
     return "Я функция {name}, которая приняла\nпозиционные аргументы: {0} и" \
            "\nименованные аргументы: {1}!".format(args, kw, name=test.__name__)
+
+
+fix_args = (4,5)
+fix_kw = {"a": 3, "d": 4}
+args = (1, 2, 3)
+kw = {"a": 1, "b": 2}
+print(modified_func(test, *fix_args, **fix_kw)(*args, **kw))
+print(modified_func(test, *fix_args, **fix_kw).__doc__)
+# print(modified_func(test, *fix_args, **fix_kw).__name__)
