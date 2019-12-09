@@ -23,12 +23,14 @@ class Suppressor:
         # therefore an additional condition exc_type is not None
         return exc_type is not None and issubclass(exc_type, self.press_exception)
 
+
 with Suppressor(ZeroDivisionError):
     a = 1/0
 print("It is fine")
 
 
 class Withoutsuppress:
+    """Example class used to demonstrate contextlib.suppress work"""
 
     def __enter__(self):
         print("Enter to context")
