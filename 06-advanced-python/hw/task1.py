@@ -10,26 +10,25 @@ import collections
 class GraphIterator(collections.abc.Iterator):
     def __init__(self, E):
         self.E = E
-        _iter = iter(self.E)
-        self._cursor = -1
-        self.start = next(_iter)
+        self.cursor = -1
+        self.start = next(iter(self.E))
+        self.is_visited = [self.start]
         self.bfs()
 
     def bfs(self):
-        self.is_visited = [self.start]
-        graph_deque = self.E[self.start]
+        graph_deque = collections.deque(self.E[self.start])
         while graph_deque:
-            vertex = graph_deque.pop(0)
+            vertex = graph_deque.popleft()
             if vertex not in self.is_visited:
                 for child in self.E[vertex]:
                     graph_deque.append(child)
                 self.is_visited.append(vertex)
 
     def __next__(self):
-        self._cursor += 1
-        if self._cursor >= len(self.E):
+        self.cursor += 1
+        if self.cursor >= len(self.E):
             raise StopIteration
-        return self.is_visited[self._cursor]
+        return self.is_visited[self.cursor]
 
 
 class Graph:
