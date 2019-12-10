@@ -3,6 +3,7 @@ E - dict(<V> : [<V>, <V>, ...])
 Ключ - строка, идентифицирующая вершину графа
 значение - список вершин, достижимых из данной
 
+
 Сделать так, чтобы по графу можно было итерироваться(обходом в ширину)
 
 """
@@ -33,6 +34,10 @@ class Graph:
             raise StopIteration
         return self.storage.popleft()
 
+Сделать так, чтобы по графу можно было итерироваться(обходом в ширину)
+"""
+
+
     def bfs(self, name, bfs_graph):
         search_deque = deque()
         search_deque += bfs_graph[name]
@@ -50,5 +55,13 @@ for i in bfs_traversal:
 
 
 
+class Graph:
+    def __init__(self, E):
+        self.E = E
 
 
+E = {'A': ['B', 'C', 'D'], 'B': ['C'], 'C': [], 'D': ['A']}
+graph = Graph(E)
+
+for vertex in graph:
+    print(vertex)

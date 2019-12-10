@@ -4,6 +4,7 @@ with Suppressor(ZeroDivisionError):
     1/0
 print("It's fine")
 """
+
 import sys
 from contextlib import suppress
 
@@ -43,3 +44,8 @@ class Withoutsuppress:
 with suppress(ZeroDivisionError):  # that construction also suppresses any of the specified exceptions
     with Withoutsuppress():
         raise ZeroDivisionError
+
+
+class Suppressor:
+    pass
+
