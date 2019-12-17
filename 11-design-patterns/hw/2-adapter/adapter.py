@@ -48,7 +48,7 @@ class StoreService:
             }
         return {
             'status': 'error',
-            'msg': 'Document with {} ID is not found.'.format(document_id),
+            'msg': f'Document with {document_id} ID is not found.',
         }
 
 
@@ -109,8 +109,8 @@ def client_code(documents_handler):
 
 
 if __name__ == "__main__":
-    class App: pass  # Упрощенная реализация сложного приложения
-
+    class App:
+        pass  # Упрощенная реализация сложного приложения
 
     app = App()
     app.documents_handler = DocumentsHandler(StoreService())

@@ -12,7 +12,7 @@ MyTubeChannel - канал, у которого есть владелец.
     Методы:
         __init__(channel_name: str, chanel_owner: MyTubeUser) - При создании канала указывается название канала и его владелец
         subscribe(user: MyTubeUser) - Подписка пользователя user на канал
-        publish_video(video: str) - Публикация нового видео и рассылка новости о публикации всем подписчика
+        publish_video(video: str) - Публикация нового видео и рассылка новости о публикации всем подписчикам
         publish_playlist(name: str, playlist: List[str]) - Публикация нового плейлиста и рассылка новости о публикации всем подписчикам
 
 MyTubeUser - Пользователь видеохостинга MyTube
@@ -22,7 +22,7 @@ MyTubeUser - Пользователь видеохостинга MyTube
         __init__(user_name: str) - У нового пользователя есть имя
         update(message: str): - Метод для приёма уведомлений о публикации
 
-Примерн кода, который должен работать:
+Пример кода, который должен работать:
 
 matt = MyTubeUser('Matt')
 john = MyTubeUser('John')
