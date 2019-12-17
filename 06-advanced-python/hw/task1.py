@@ -23,6 +23,10 @@ class GraphIterator(collections.abc.Iterator):
                 for child in self.E[vertex]:
                     graph_deque.append(child)
                 self.is_visited.append(vertex)
+        if len(self.is_visited) != len(self.E):
+            for key, value in self.E.items():
+                if key not in self.is_visited:
+                    self.is_visited.append(key)
 
     def __next__(self):
         self.cursor += 1
@@ -39,7 +43,8 @@ class Graph:
         return GraphIterator(self.E)
 
 
-E = {'A': ['B', 'C', 'D'], 'B': ['C'], 'C': [], 'D': ['A']}
+E = {'A': ['B', 'C', 'D'], 'B': ['C'], 'C': [], 'D': ['A'], 'E': []}
+
 graph = Graph(E)
 
 for vertex in graph:
