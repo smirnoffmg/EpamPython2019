@@ -25,10 +25,11 @@ True
 1
 
 """
+import weakref
 
 
 class Meta(type):
-    _instances = []
+    _inst = weakref.WeakSet()
 
     def connect(cls, *args, **kwargs):
         _args = {}
@@ -39,23 +40,25 @@ class Meta(type):
             _args.update({'args': args})
             _args.update(kwargs)
         if cls == SiamObj:
-            for i in cls._instances:
+            for i in cls._inst:
                 if i.__dict__ == _args:
                     return i
 
     def __call__(cls, *args, **kwargs):
         setattr(cls, 'connect', cls.connect)
-        setattr(cls, 'pool', cls._instances)
+        setattr(cls, 'pool', cls._inst)
         _cls = super().__call__(*args, **kwargs)
-        for item in cls._instances:
+        for item in cls._inst:
             if type(item) != type(_cls):
-                cls._instances.append(_cls)
+                cls._inst.add(_cls)
         if isinstance(_cls, SiamObj):
-            for i in cls._instances:
+            for i in cls._inst:
                 if i.__dict__ == _cls.__dict__:
                     return i
-            cls._instances.append(_cls)
-        return cls._instances[-1]
+            cls._inst.add(_cls)
+        for i, item in enumerate(cls._inst):
+            if i == len(cls._inst)-1:
+                return item
 
 
 class SiamObj(metaclass=Meta):
@@ -77,7 +80,6 @@ if __name__ == '__main__':
     print(test2 is test1)
     pool = test3.pool
     print(len(pool))
-    test3.pool.pop(0)
     del test3
     print(len(pool))
 
