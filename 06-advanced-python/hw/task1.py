@@ -11,9 +11,13 @@ class GraphIterator(collections.abc.Iterator):
     def __init__(self, E):
         self.E = E
         self.cursor = -1
-        self.start = next(iter(self.E))
-        self.is_visited = [self.start]
-        self.bfs()
+        # self.start = next(iter(self.E))
+        self.is_visited = []
+        for i in self.E:
+            self.start = i
+            if self.start not in self.is_visited:
+                self.is_visited.append(self.start)
+                self.bfs()
 
     def bfs(self):
         graph_deque = collections.deque(self.E[self.start])
@@ -23,10 +27,6 @@ class GraphIterator(collections.abc.Iterator):
                 for child in self.E[vertex]:
                     graph_deque.append(child)
                 self.is_visited.append(vertex)
-        if len(self.is_visited) != len(self.E):
-            for key, value in self.E.items():
-                if key not in self.is_visited:
-                    self.is_visited.append(key)
 
     def __next__(self):
         self.cursor += 1
