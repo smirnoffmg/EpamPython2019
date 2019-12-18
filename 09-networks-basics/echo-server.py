@@ -13,5 +13,5 @@ while 1:
     client, address = s.accept() 
     data = client.recv(size) 
     if data: 
-        client.send(data) 
+        client.send(b'Hello!')
     client.close()
