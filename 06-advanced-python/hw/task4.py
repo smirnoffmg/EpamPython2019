@@ -11,13 +11,17 @@ V folder1
 > print(file3 in folder2)
 True
 """
+<<<<<<< HEAD
 import os
+=======
+>>>>>>> upsteam/master
 
 
 class PrintableFolder:
     def __init__(self, name, content):
         self.name = name
         self.content = content
+<<<<<<< HEAD
         self.base_level = content[0][0].count(os.sep)
 
     def __str__(self):
@@ -52,6 +56,11 @@ class PrintableFolder:
                 if f == item.name:
                     return True
         return False
+=======
+
+    def __str__(self):
+        pass
+>>>>>>> upsteam/master
 
 
 class PrintableFile:
@@ -59,6 +68,7 @@ class PrintableFile:
         self.name = name
 
     def __str__(self):
+<<<<<<< HEAD
         return f'-> {self.name}'
 
 
@@ -71,3 +81,7 @@ for root, dirs, files in os.walk(path):
 folder_test = PrintableFolder(basename, content)
 print(folder_test)
 print(PrintableFile('task4.py') in folder_test)
+=======
+        pass
+
+>>>>>>> upsteam/master

@@ -5,6 +5,7 @@ with Suppressor(ZeroDivisionError):
 print("It's fine")
 """
 
+<<<<<<< HEAD
 
 class Suppressor:
     def __init__(self, *exceptions):
@@ -20,3 +21,8 @@ class Suppressor:
 with Suppressor(ZeroDivisionError):
     1/0
 print("It's fine")
+=======
+
+class Suppressor:
+    pass
+>>>>>>> upsteam/master

@@ -18,13 +18,18 @@ True
 >>> unit2.a == 2
 True
 >>> pool = unit3.pool
+<<<<<<< HEAD
 >>> print(len(b))
+=======
+>>> print(len(pool))
+>>>>>>> upsteam/master
 2
 >>> del unit3
 >>> print(len(pool))
 1
 
 """
+<<<<<<< HEAD
 import weakref
 
 
@@ -86,3 +91,5 @@ if __name__ == '__main__':
 
 
 
+=======
+>>>>>>> upsteam/master

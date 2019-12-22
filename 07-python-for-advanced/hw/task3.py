@@ -2,6 +2,7 @@
 Написать тесты(pytest or unittest) к предыдущим 2 заданиям, запустив которые, я бы смог бы проверить их корректность
 Обязательно проверить всю критическую функциональность
 """
+<<<<<<< HEAD
 import unittest
 import time
 from task2 import Message
@@ -56,3 +57,5 @@ class PropertyTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+=======
+>>>>>>> upsteam/master

@@ -13,5 +13,9 @@ while 1:
     client, address = s.accept() 
     data = client.recv(size) 
     if data: 
+<<<<<<< HEAD
         client.send(b'Hello!')
+=======
+        client.send(data) 
+>>>>>>> upsteam/master
     client.close()
