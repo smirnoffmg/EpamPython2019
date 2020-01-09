@@ -19,4 +19,4 @@
 - Максим Смирнов (maksim_smirnov@epam.com)
 - Даниил Шадрин (daniil_shadrin@epam.com)
 - Виктория Латынина (victoria_latynina@epam.com)
-
+- Андрей Шулаев (andrei_shulaev@epam.com)
