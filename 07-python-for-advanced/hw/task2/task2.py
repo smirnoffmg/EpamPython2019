@@ -29,7 +29,7 @@ class Message:
 
 if __name__ == "__main__":
     m = Message()
-    initial = m.read
-    assert initial is m.read
+    initial = m.msg
+    assert initial is m.msg
     time.sleep(10)
-    assert initial is not m.read
+    assert initial is not m.msg
