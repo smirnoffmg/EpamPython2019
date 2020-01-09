@@ -43,12 +43,12 @@ if __name__ == "__main__":
     print("User: I can work just fine with the Client objects:")
     client = Client()
     user_code(client)
-    print('-' * 50)
+    print("-" * 50)
 
     service = Service()
     print("User: The Service class has a weird interface. See, I don't understand it:")
     print(f"Service: {service.specific_request()}")
-    print('-' * 50)
+    print("-" * 50)
 
     print("User: But I can work with it via the Adapter:")
     adapter = Adapter(service)

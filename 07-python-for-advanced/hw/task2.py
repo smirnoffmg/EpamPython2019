@@ -11,13 +11,12 @@ import uuid
 
 
 class Message:
-
     @timer_property(t=10)
     def msg(self):
         self._msg = self.get_message()
         return self._msg
 
-    @msg.setter # reset timer also
+    @msg.setter  # reset timer also
     def msg(self, param):
         self._msg = param
 
@@ -28,7 +27,7 @@ class Message:
         return uuid.uuid4().get_hex()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     m = Message()
     initial = m.read
     assert initial is m.read

@@ -5,7 +5,7 @@ class Singleton:
         if Singleton.__instance is None:
             Singleton.__instance = self
         else:
-            raise Exception('The class is a singleton')
+            raise Exception("The class is a singleton")
 
     @staticmethod
     def get_instance():
@@ -18,7 +18,7 @@ class Singleton:
         return 42
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(Singleton())
     # print(Singleton())  # Второй вызов констуктора выдаст ошибку
     print(Singleton.get_instance())

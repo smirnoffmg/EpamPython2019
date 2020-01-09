@@ -49,7 +49,9 @@ MAX_OIL_LEVEL = 100
 
 
 class Car:
-    def __init__(self, fuel_level=100, wheels_broken=0, oil_level=100, brake_correct=True):
+    def __init__(
+        self, fuel_level=100, wheels_broken=0, oil_level=100, brake_correct=True
+    ):
         self.fuel_level = fuel_level  # 0 - 100 %
         self.wheels_broken = wheels_broken  # 0 - 4
         self.oil_level = oil_level  # 0 - 100 %
@@ -71,7 +73,7 @@ class Car:
         if 0 <= num <= 100:
             self._fuel_level = num
         else:
-            raise ValueError('Уровень топлива должен быть в диапазоне от 0 до 100 %')
+            raise ValueError("Уровень топлива должен быть в диапазоне от 0 до 100 %")
 
     @property
     def wheels_broken(self):
@@ -82,7 +84,7 @@ class Car:
         if 0 <= num <= 4:
             self._wheels_broken = num
         else:
-            raise ValueError('У автомобиля от 0 до 4 колес')
+            raise ValueError("У автомобиля от 0 до 4 колес")
 
     @property
     def oil_level(self):
@@ -93,7 +95,7 @@ class Car:
         if 0 <= level <= 100:
             self._oil_level = level
         else:
-            raise ValueError('Уровень масла должен быть в диапазоне от 0 до 100 %')
+            raise ValueError("Уровень масла должен быть в диапазоне от 0 до 100 %")
 
     @property
     def brake_correct(self):

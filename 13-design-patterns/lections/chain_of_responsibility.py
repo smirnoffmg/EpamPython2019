@@ -49,7 +49,9 @@ MAX_OIL_LEVEL = 100
 
 
 class Car:
-    def __init__(self, fuel_level=100, wheels_broken=0, oil_level=100, brake_correct=True):
+    def __init__(
+        self, fuel_level=100, wheels_broken=0, oil_level=100, brake_correct=True
+    ):
         self._fuel_level = fuel_level  # 0 - 100 %
         self._wheels_broken = wheels_broken  # 0 - 4
         self._oil_level = oil_level  # 0 - 100 %

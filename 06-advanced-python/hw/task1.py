@@ -11,7 +11,7 @@ class Graph:
         self.E = E
 
 
-E = {'A': ['B', 'C', 'D'], 'B': ['C'], 'C': [], 'D': ['A']}
+E = {"A": ["B", "C", "D"], "B": ["C"], "C": [], "D": ["A"]}
 graph = Graph(E)
 
 for vertex in graph:

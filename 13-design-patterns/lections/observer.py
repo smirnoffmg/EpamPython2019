@@ -95,25 +95,25 @@ class Citizen(Observer):
         """
         Получение очередной новости
         """
-        print(f'{self.name} узнал следующее: {message}')
+        print(f"{self.name} узнал следующее: {message}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     newspaper = Newspaper()  # Создаем газету
 
     # Добавляем двух человек
-    ivan = Citizen('Иван')
-    maria = Citizen('Мария')
+    ivan = Citizen("Иван")
+    maria = Citizen("Мария")
 
     # Оформим подписку на газету
     newspaper.subscribe(ivan)
     newspaper.subscribe(maria)
 
     # Вбрасываем газетную утку
-    newspaper.add_news('Пришельцы прилетели на Землю и посеяли пшеницу')
+    newspaper.add_news("Пришельцы прилетели на Землю и посеяли пшеницу")
 
     # Один гражданин решил отписаться от таких новостей
     newspaper.unsubscribe(maria)
 
     # Выпустим опровержение
-    newspaper.add_news('Опровержение! Пришельцев не было, пшеница сама выросла')
+    newspaper.add_news("Опровержение! Пришельцев не было, пшеница сама выросла")

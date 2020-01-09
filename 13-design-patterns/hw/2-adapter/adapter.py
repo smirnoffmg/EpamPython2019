@@ -27,28 +27,22 @@ class StoreService:
     stored_documents = {}
 
     def store_document(self, document):
-        if document.endswith('.json'):
+        if document.endswith(".json"):
             document_id = uuid.uuid4()
             self.stored_documents[document_id] = document
-            return {
-                'status': 'success',
-                'document_id': document_id
-            }
+            return {"status": "success", "document_id": document_id}
         else:
             return {
-                'status': 'error',
-                'msg': 'Now we store only JSON documents. Sorry :(',
+                "status": "error",
+                "msg": "Now we store only JSON documents. Sorry :(",
             }
 
     def get_document(self, document_id):
         if document_id in self.stored_documents:
-            return {
-                'status': 'success',
-                'document': self.stored_documents[document_id]
-            }
+            return {"status": "success", "document": self.stored_documents[document_id]}
         return {
-            'status': 'error',
-            'msg': f'Document with {document_id} ID is not found.',
+            "status": "error",
+            "msg": f"Document with {document_id} ID is not found.",
         }
 
 
@@ -71,10 +65,10 @@ class DocumentsHandler:
 
         for document in documents:
             result = self._service.store_document(document)
-            if result['status'] == 'success':
-                stored_documents.append(result['document_id'])
-            if result['status'] == 'error':
-                print("Couldn't upload document {}: {}".format(document, result['msg']))
+            if result["status"] == "success":
+                stored_documents.append(result["document_id"])
+            if result["status"] == "error":
+                print("Couldn't upload document {}: {}".format(document, result["msg"]))
 
         self._document_ids.extend(stored_documents)
 
@@ -92,16 +86,20 @@ class DocumentsHandler:
 
         for doc_id in document_ids:
             result = self._service.get_document(doc_id)
-            if result['status'] == 'success':
-                loaded_documents.append(result['document'])
-            if result['status'] == 'error':
-                print("Couldn't load document with {} ID: {}".format(doc_id, result['msg']))
+            if result["status"] == "success":
+                loaded_documents.append(result["document"])
+            if result["status"] == "error":
+                print(
+                    "Couldn't load document with {} ID: {}".format(
+                        doc_id, result["msg"]
+                    )
+                )
 
         return loaded_documents
 
 
 def client_code(documents_handler):
-    xml_files_to_upload = os.listdir(os.path.dirname(__file__) + '/documents')
+    xml_files_to_upload = os.listdir(os.path.dirname(__file__) + "/documents")
 
     document_ids = documents_handler.upload_documents(xml_files_to_upload)
     print(document_ids)
@@ -109,6 +107,7 @@ def client_code(documents_handler):
 
 
 if __name__ == "__main__":
+
     class App:
         pass  # Упрощенная реализация сложного приложения
 

@@ -13,9 +13,12 @@ class AbstractCoffee(ABC):
     """
     Базовый интерфейс Компонента определяет поведение, которое изменяется декораторами.
     """
+
     def __str__(self):
-        return f'Coffee {hex(id(self))}; cost: {self.get_cost()}; ' \
-            f'ingredients: {self.get_ingredients()}; tax: {self.get_tax()}'
+        return (
+            f"Coffee {hex(id(self))}; cost: {self.get_cost()}; "
+            f"ingredients: {self.get_ingredients()}; tax: {self.get_tax()}"
+        )
 
     @abstractmethod
     def get_cost(self):
@@ -34,11 +37,12 @@ class ConcreteCoffee(AbstractCoffee):
     Конкретный Компонент предоставляет реализацию поведения по умолчанию.
     Может быть несколько вариаций этих классов.
     """
+
     def get_cost(self):
         return 1
 
     def get_ingredients(self):
-        return 'coffee'
+        return "coffee"
 
 
 class AbstractCoffeeDecorator(AbstractCoffee):
@@ -49,6 +53,7 @@ class AbstractCoffeeDecorator(AbstractCoffee):
     включать в себя поле для хранения завёрнутого компонента и средства его
     инициализации.
     """
+
     def __init__(self, decorated_coffee):
         self.decorated_coffee = decorated_coffee
 
@@ -64,11 +69,12 @@ class Sugar(AbstractCoffeeDecorator):
     Конкретные Декораторы вызывают обёрнутый объект и изменяют его результат
     некоторым образом.
     """
+
     def __init__(self, decorated_coffee):
         super(Sugar, self).__init__(decorated_coffee)
 
     def get_ingredients(self):
-        return self.decorated_coffee.get_ingredients() + ', sugar'
+        return self.decorated_coffee.get_ingredients() + ", sugar"
 
 
 class Milk(AbstractCoffeeDecorator):
@@ -79,7 +85,7 @@ class Milk(AbstractCoffeeDecorator):
         return self.decorated_coffee.get_cost() + 0.25
 
     def get_ingredients(self):
-        return self.decorated_coffee.get_ingredients() + ', milk'
+        return self.decorated_coffee.get_ingredients() + ", milk"
 
 
 class Vanilla(AbstractCoffeeDecorator):
@@ -90,11 +96,11 @@ class Vanilla(AbstractCoffeeDecorator):
         return self.decorated_coffee.get_cost() + 0.75
 
     def get_ingredients(self):
-        return self.decorated_coffee.get_ingredients() + ', vanilla'
+        return self.decorated_coffee.get_ingredients() + ", vanilla"
 
 
-if __name__ == '__main__':
-    print('It\'s a coffee shop')
+if __name__ == "__main__":
+    print("It's a coffee shop")
     coffee = ConcreteCoffee()
     print(coffee)
 
@@ -107,29 +113,36 @@ if __name__ == '__main__':
     coffee = Sugar(coffee)
     print(coffee)
 
-    print('-' * 50)
+    print("-" * 50)
 
     # -----------------------------------------------------------------------
     # decorator of a function
     def welcome_message(func):
         def print_wrapper(*args):
-            print('Thank you for visiting our Coffee Shop!')
+            print("Thank you for visiting our Coffee Shop!")
             func(*args)
-            print('See you next time!')
+            print("See you next time!")
+
         return print_wrapper
 
     # long form
     def print_coffee(_coffee):
-        print(f'You ordered: {_coffee.get_ingredients()}; \n'
-              f'The total price is: {_coffee.get_cost() + _coffee.get_tax()}$')
+        print(
+            f"You ordered: {_coffee.get_ingredients()}; \n"
+            f"The total price is: {_coffee.get_cost() + _coffee.get_tax()}$"
+        )
+
     decorated_print = welcome_message(print_coffee)
     decorated_print(coffee)
 
-    print('-' * 50)
+    print("-" * 50)
 
     # short form
     @welcome_message
     def decorated_print_coffee(_coffee):
-        print(f'You ordered: {_coffee.get_ingredients()}; \n'
-              f'The total price is: {_coffee.get_cost() + _coffee.get_tax()}$')
+        print(
+            f"You ordered: {_coffee.get_ingredients()}; \n"
+            f"The total price is: {_coffee.get_cost() + _coffee.get_tax()}$"
+        )
+
     decorated_print_coffee(coffee)

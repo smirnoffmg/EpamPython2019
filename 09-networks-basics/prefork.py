@@ -12,20 +12,20 @@ import socket
 # listening. Runs once in the parent; all forked children
 # inherit the socket's file descriptor.
 acceptor = socket.socket()
-acceptor.bind(('localhost', 4242))
+acceptor.bind(("localhost", 4242))
 acceptor.listen(10)
 
 # Ryan's Ruby code here traps EXIT and closes the socket. This
 # isn't required in Python; the socket will be closed when the
 # socket object gets garbage collected.
-    
+
 # Fork you some child processes. In the parent, the call to
 # fork returns immediately with the pid of the child process;
 # fork never returns in the child because we exit at the end
 # of the block.
 for i in range(3):
     pid = os.fork()
-    
+
     # os.fork() returns 0 in the child process and the child's
     # process id in the parent. So if pid == 0 then we're in
     # the child process.
@@ -41,17 +41,16 @@ for i in range(3):
                 # blocks until a new connection is ready to be
                 # dequeued.
                 conn, addr = acceptor.accept()
-                
+
                 # For easier use, turn the socket connection
                 # into a file-like object.
                 flo = conn.makefile()
-                flo.write('Child %s echo> ' % childpid)
+                flo.write("Child %s echo> " % childpid)
                 flo.flush()
                 message = flo.readline()
                 flo.write(message)
                 conn.close()
-                print "Child %s echo'd: %r" % \
-                          (childpid, message.strip())
+                print "Child %s echo'd: %r" % (childpid, message.strip())
         except KeyboardInterrupt:
             sys.exit()
 
