@@ -20,3 +20,4 @@
 - Даниил Шадрин (daniil_shadrin@epam.com)
 - Виктория Латынина (victoria_latynina@epam.com)
 - Андрей Шулаев (andrei_shulaev@epam.com)
+- Алексей Романов (aleksei_romanov@epam.com)
